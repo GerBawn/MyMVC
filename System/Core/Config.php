@@ -14,6 +14,8 @@ class Config implements \ArrayAccess
     public function __construct($path)
     {
         $this->path = $path;
+        $config = require  $this->path . '/common.php';
+        $this->configs['common'] = $config;
     }
 
 
@@ -45,8 +47,13 @@ class Config implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if(isset($this->configs['common'][$offset]))
+            return $this->configs['common'][$offset];
+
         if (empty($this->configs[$offset])) {
             $filePath = $this->path . '/' . $offset . '.php';
+            if(!file_exists($filePath))
+                return null;
             $config = require $filePath;
             $this->configs[$offset] = $config;
         }
