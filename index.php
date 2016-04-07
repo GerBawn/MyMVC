@@ -12,5 +12,5 @@ include BASEDIR . '/System/Core/Loader.php';
 
 spl_autoload_register('\System\Core\Loader::autoload');
 
-$app = Application::getInstance();
+$app = Application::getInstance(BASEDIR);
 $app->run();

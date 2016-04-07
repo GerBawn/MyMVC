@@ -5,7 +5,20 @@
  */
 namespace System\Core;
 
-class Controller
+abstract class Controller
 {
-    
+    public function __construct()
+    {
+
+    }
+
+    public function assign($key, $value)
+    {
+
+    }
+
+    public function display($file)
+    {
+
+    }
 }

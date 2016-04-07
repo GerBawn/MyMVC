@@ -5,19 +5,14 @@
  */
 
 $config = [
-    'master' => [
-        'type' => 'MySQL',
+    'driver' => 'mysqli',
+    'default' => [
         'host' => 'localhost',
+        'port' => '3306',
         'user' => 'root',
-        'password' => 'lingchen',
-        'dbname' => 'test',
-    ],
-
-    'slave' => [
-        'type' => 'MySQL',
-        'host' => 'localhost',
-        'user' => 'root',
-        'password' => 'lingchen',
+        'password' => 'Lingchen_410',
         'dbname' => 'test',
     ],
 ];
+
+return $config;

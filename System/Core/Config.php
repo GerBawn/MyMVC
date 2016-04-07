@@ -50,7 +50,6 @@ class Config implements \ArrayAccess
             $config = require $filePath;
             $this->configs[$offset] = $config;
         }
-
         return $this->configs[$offset];
     }
 
