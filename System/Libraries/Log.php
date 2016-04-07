@@ -10,41 +10,41 @@ use System\Core\Application;
 
 class Log
 {
-    private $path;
+    private static $storage;
 
-    private $logFile;
+    private static $logLevel = [
+        'ALERT' => 1,
+        'CRITICAL' => 2,
+        'ERROR' => 3,
+        'WARNING' => 4,
+        'NOTICE' => 5,
+        'INFO' => 6,
+        'DEBUG' => 7,
+        'ALL' => 8,
+    ];
 
-    private $logLevel = ['ERROR' => 1, 'DEBUG' => 2, 'INFO' => 3, 'ALL' => 4];
+    private static $threshold;
 
-    private $threshold;
-
-    public function __construct()
+    public static function write($level, $message)
     {
         $app = Application::getInstance();
-        $this->path = $app->config['logPath'] ? $app->config['logPath'] : BASEDIR.'/logs';
-        $this->logFile = $app->config['logFile'] ? $app->config['logFile'] : 'common';
-        $this->threshold = $app->config['logLevel'] ? $this->logLevel[$app->config['logLevel']] : 1;
-    }
+        if (empty(self::$threshold)) {
+            self::$threshold = $app->config['logLevel'] ? self::$logLevel[$app->config['logLevel']] : 1;
+        }
+        var_dump(self::$threshold);
+        if (self::$logLevel[$level] > self::$threshold) {
+            return;
+        }
+        if (empty(self::$storage)) {
+            $app = Application::getInstance();
+            $type = $app->config['logType'];
+            $config['logPath'] = $app->config['logPath'] ? $app->config['logPath'] : BASEDIR . '/logs';
+            $config['logFile'] = $app->config['logFile'] ? $app->config['logFile'] : 'common';
+            $class = 'System\\Driver\\Log\\' . ucfirst($type);
+            self::$storage = new $class($config);
+        }
 
-    public function write($level, $message, $class = '', $function ='', $line = '')
-    {
-        if($this->logLevel[$level] > $this->threshold)
-            return ;
-        $logFile = $this->path.'/'.$this->logFile.date('Ymd').'.log';
+        self::$storage->write($level, $message);
 
-        file_exists($this->path) or mkdir($this->path, 0755, true);
-
-        $time = date('Y-m-d H:i:s');
-
-        $msg = "{$level} - {$time} - class: {$class} function:{$function} line:{$line}"
-                    ." --> msg:{$message}".PHP_EOL;
-
-        if(!$fp = fopen($logFile, 'a+'))
-            return ;
-        flock($fp, LOCK_EX);
-        fwrite($fp, $msg);
-        flock($fp, LOCK_UN);
-        fclose($fp);
-        chmod($logFile, 0777);
     }
 }
