@@ -2,14 +2,18 @@
 namespace App\Controller;
 
 use App\Model\User;
+use System\Core\Application;
+use System\Libraries\Log;
 
 class Index
 {
     public function index()
     {
         $model = new User();
-        $model->createUser(['name' => 'aaa', 'age' => 15]);
-        $model->createUser(['name' => 'bbb']);
-        var_dump($model->getAllUser());
+        $app =  Application::getInstance();
+//        $log = new Log();
+//        $log->write('DEBUG', 'my name is lingchen', __CLASS__, __FUNCTION__, __LINE__);
+//        var_dump($app->config['name']);
+        $model->createUser(['name' => 'lingchen', 'age' => 10]);
     }
 }

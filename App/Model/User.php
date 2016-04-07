@@ -10,6 +10,11 @@ use System\Core\Model;
 
 class User extends Model
 {
+    public function __construct()
+    {
+        parent::__construct('test');
+    }
+
     public function getOneUser()
     {
         $this->query("SELECT * FROM m1");
@@ -33,8 +38,6 @@ class User extends Model
         }
         $values = substr($values, 0, strlen($values) - 1);
         $sql = "INSERT INTO m1({$cols}) VALUES({$values})";
-        $this->startTransaction();
         $this->query($sql);
-        $this->rollback();
     }
 }
