@@ -9,11 +9,12 @@ class Index
 {
     public function index()
     {
-        $model = new User();
-        $app =  Application::getInstance();
+//        $model = new User();
+//        $app =  Application::getInstance();
 //        $log = new Log();
 //        $log->write('DEBUG', 'my name is lingchen', __CLASS__, __FUNCTION__, __LINE__);
 //        var_dump($app->config['name']);
-        $model->createUser(['name' => 'lingchen', 'age' => 10]);
+        Log::write('DEBUG', 'this is debug text.');
+//        $model->createUser(['name' => 'lingchen', 'age' => 10]);
     }
 }
