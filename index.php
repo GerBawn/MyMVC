@@ -11,6 +11,7 @@ include BASEDIR . '/System/Core/Loader.php';
 include BASEDIR . '/configs/constants.php';
 
 spl_autoload_register('\System\Core\Loader::autoload');
+require 'vendor/autoload.php';
 
 $app = Application::getInstance(BASEDIR);
 if($app->config['debug'])
