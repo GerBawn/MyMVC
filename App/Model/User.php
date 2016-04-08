@@ -38,6 +38,14 @@ class User extends Model
         }
         $values = substr($values, 0, strlen($values) - 1);
         $sql = "INSERT INTO m1({$cols}) VALUES({$values})";
-        $this->query($sql);
+        if ($this->insert($sql)) {
+            return true;
+        }
+    }
+
+    public function updateUser($user)
+    {
+        $sql = "UPDATE m1 SET `name` = 'ger' WHERE `name` = 'lingchen'";
+        var_dump($this->update($sql));
     }
 }

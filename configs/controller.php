@@ -5,6 +5,16 @@
  */
 
 $config = [
+    'defaultController' => 'index',
+    'defaultMethod' => 'index',
+    'decorators' => [
+
+    ],
+    'index' => [
+        'decorators' => [
+            'App\\Decorator\\TestDecorator',
+        ],
+    ],
 ];
 
 return $config;

@@ -14,10 +14,11 @@ spl_autoload_register('\System\Core\Loader::autoload');
 require 'vendor/autoload.php';
 
 $app = Application::getInstance(BASEDIR);
-if($app->config['debug'])
+if ($app->config['debug']) {
     error_reporting(E_ALL);
-else
+} else {
     error_reporting(0);
+}
 ini_set('date.timezone', $app->config['timezone']);
 //date_default_timezone_set($th)
 $app->run();
