@@ -5,12 +5,32 @@
  */
 namespace System\Core;
 
+use System\Libraries\Cache;
+
 class Model
 {
+    /**
+     * 保存数据库连接
+     * @var
+     */
     public $conn;
 
+    /**
+     * 配置信息
+     * @var
+     */
     private $config;
 
+    /**
+     * 保存缓存连接
+     * @var
+     */
+    protected $cache;
+
+    /**
+     * Model constructor.
+     * @param string $db
+     */
     public function __construct($db = 'default')
     {
         $dbConfig = Application::getInstance()->config['database'];
@@ -27,33 +47,53 @@ class Model
             $class = '\System\Driver\Database\PdoMySQL';
         }
         $this->conn = new $class($this->config);
+
+        $this->cache = Cache::getInstance([]);
     }
 
+    /**
+     * @param $sql
+     */
     public function query($sql)
     {
         $this->conn->query($sql);
     }
 
+    /**
+     * @return mixed
+     */
     public function one()
     {
         return $this->conn->one();
     }
 
+    /**
+     * @return mixed
+     */
     public function all()
     {
         return $this->conn->all();
     }
 
+    /**
+     *
+     */
     protected function startTransaction()
     {
         $this->conn->startTransaction();
     }
 
+    /**
+     *
+     */
     protected function commit()
     {
         $this->conn->commit();
     }
 
+    /**
+     *
+     */
     protected function rollback()
     {
         $this->conn->rollback();

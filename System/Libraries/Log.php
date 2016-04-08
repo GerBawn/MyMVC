@@ -31,7 +31,6 @@ class Log
         if (empty(self::$threshold)) {
             self::$threshold = $app->config['logLevel'] ? self::$logLevel[$app->config['logLevel']] : 1;
         }
-        var_dump(self::$threshold);
         if (self::$logLevel[$level] > self::$threshold) {
             return;
         }

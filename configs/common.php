@@ -8,7 +8,7 @@
 $config = [
     'name' => 'lingchen',
     'debug' => true,
-    'logType' => 'SeasLog',
+    'logType' => 'file',
     'logLevel' => 'DEBUG',
     'timezone' => 'Asia/Shanghai',
 ];

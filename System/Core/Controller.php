@@ -5,11 +5,15 @@
  */
 namespace System\Core;
 
+use System\Libraries\Cache;
+
 abstract class Controller
 {
+    protected $cache;
+
     public function __construct()
     {
-
+        $this->cache = Cache::getInstance([]);
     }
 
     public function assign($key, $value)
