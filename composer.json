@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpunit/phpunit": "5.3.*",
+        "predis/predis": "1.0.3"
+    }
+}
