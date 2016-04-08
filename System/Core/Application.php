@@ -28,10 +28,31 @@ class Application
 
     public function run()
     {
-        $controller = ucfirst($_REQUEST['c']);
-        $method = $_REQUEST['m'];
+        $controller = empty($_REQUEST['c']) ? $this->config['controller']['defaultController'] :
+            $_REQUEST['c'];
+        $method = empty($_REQUEST['m']) ? $this->config['controller']['defaultMethod'] :
+            $_REQUEST['m'];
         $class = '\\App\\Controller\\' . $controller;
         $obj = new $class();
+
+        $decorators = [];
+        if (isset($this->config['controller']['decorators'])) {
+            foreach ($this->config['controller']['decorators'] as $class) {
+                $decorators[] = new $class();
+            }
+        }
+        if (isset($this->config['controller'][$controller]['decorators'])) {
+            foreach ($this->config['controller'][$controller]['decorators'] as $class) {
+                $decorators[] = new $class();
+            }
+        }
+
+        foreach ($decorators as $decorator) {
+            $decorator->beforeAction();
+        }
         $obj->$method();
+        foreach ($decorators as $decorator) {
+            $decorator->afterAction();
+        }
     }
 }

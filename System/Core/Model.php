@@ -51,6 +51,16 @@ class Model
         $this->cache = Cache::getInstance([]);
     }
 
+    public function insert($sql)
+    {
+        return $this->conn->insert($sql);
+    }
+
+    public function update($sql)
+    {
+        return $this->conn->update($sql);
+    }
+
     /**
      * @param $sql
      */

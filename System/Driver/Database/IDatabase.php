@@ -8,6 +8,11 @@ namespace System\Driver\Database;
 
 interface IDatabase
 {
+
+    public function update($sql);
+
+    public function insert($sql);
+
     public function query($sql);
 
     public function one();

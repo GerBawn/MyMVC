@@ -6,6 +6,8 @@
  */
 namespace System\Driver\Database;
 
+use System\Libraries\Log;
+
 class MySQL implements IDatabase
 {
 
@@ -34,6 +36,31 @@ class MySQL implements IDatabase
             $this->host, $this->user, $this->password, $this->dbname,
             $this->port
         );
+    }
+
+    public function update($sql)
+    {
+        $this->conn->query($sql);
+
+        if ($this->conn->errno != 0) {
+            Log::write('ERROR', $this->conn->errno . ': ' . $this->conn->error . ": $sql");
+
+            return false;
+        }
+
+        return $this->conn->affected_rows;
+    }
+
+    public function insert($sql)
+    {
+        $this->conn->query($sql);
+        if ($this->conn->errno != 0) {
+            Log::write('ERROR', $this->conn->errno . ': ' . $this->conn->error . ": $sql");
+
+            return false;
+        }
+
+        return $this->conn->insert_id;
     }
 
     public function query($sql)
