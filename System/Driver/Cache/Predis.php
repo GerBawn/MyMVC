@@ -22,8 +22,8 @@ class Predis
         return $this->redis->get($key);
     }
 
-    public function set($key, $value)
+    public function set($key, $value, $expire)
     {
-        $this->redis->set($key, $value);
+        $this->redis->setex($key, $expire, $value);
     }
 }

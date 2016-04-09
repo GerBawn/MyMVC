@@ -39,8 +39,8 @@ class Cache
         return $this->driver->get($key);
     }
 
-    public function set($key, $value)
+    public function set($key, $value, $expire)
     {
-        $this->driver->set($key, $value);
+        $this->driver->set($key, $value, $expire);
     }
 }
