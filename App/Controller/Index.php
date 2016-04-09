@@ -10,8 +10,6 @@ class Index extends Controller
 {
     public function index()
     {
-        $model = new User();
-//        var_dump($model->createUser(['name' => 'lingchen']));
-        $model->updateUser([]);
+        $this->load->helper('helpers');
     }
 }

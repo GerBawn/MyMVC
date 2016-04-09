@@ -6,6 +6,8 @@
 use System\Core\Application;
 
 define('BASEDIR', __DIR__);
+define('SYSTEM_DIR', BASEDIR . '/System');
+define('APP_DIR', BASEDIR . '/App');
 
 include BASEDIR . '/System/Core/Loader.php';
 include BASEDIR . '/configs/constants.php';
