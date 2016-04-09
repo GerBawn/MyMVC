@@ -88,7 +88,7 @@ class Model
     /**
      *
      */
-    protected function startTransaction()
+    public function startTransaction()
     {
         $this->conn->startTransaction();
     }
@@ -96,7 +96,7 @@ class Model
     /**
      *
      */
-    protected function commit()
+    public function commit()
     {
         $this->conn->commit();
     }
@@ -104,8 +104,18 @@ class Model
     /**
      *
      */
-    protected function rollback()
+    public function rollback()
     {
         $this->conn->rollback();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
+    }
+
+    public function affectedRows()
+    {
+        return $this->conn->affectedRows();
     }
 }

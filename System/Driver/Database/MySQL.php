@@ -25,6 +25,10 @@ class MySQL implements IDatabase
 
     private $result;
 
+    private $insertId;
+
+    private $affectedRows;
+
     public function __construct($config)
     {
         $this->host = $config['host'];
@@ -105,6 +109,17 @@ class MySQL implements IDatabase
         $this->conn->rollback();
         $this->conn->autocommit(true);
     }
+
+    public function lastInsertId()
+    {
+        return $this->conn->insert_id;
+    }
+
+    public function affectedRow()
+    {
+        return $this->conn->affected_rows;
+    }
+
 
     public function __destruct()
     {

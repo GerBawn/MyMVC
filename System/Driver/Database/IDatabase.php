@@ -8,7 +8,6 @@ namespace System\Driver\Database;
 
 interface IDatabase
 {
-
     public function update($sql);
 
     public function insert($sql);
@@ -26,4 +25,8 @@ interface IDatabase
     public function commit();
 
     public function rollback();
+
+    public function lastInsertId();
+
+    public function affectedRow();
 }
