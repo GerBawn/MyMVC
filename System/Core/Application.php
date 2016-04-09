@@ -11,10 +11,13 @@ class Application
 
     public $config;
 
+    public $load;
+
     private function __construct($baseDir)
     {
         $this->baseDir = $baseDir;
         $this->config = new Config($baseDir . '/configs');
+        $this->load = new Loader();
     }
 
     public static function getInstance($baseDir = '')
