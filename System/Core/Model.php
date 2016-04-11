@@ -21,11 +21,7 @@ class Model
      */
     private $config;
 
-    /**
-     * 保存缓存连接
-     * @var
-     */
-    protected $cache;
+    protected $app;
 
     /**
      * Model constructor.
@@ -33,7 +29,8 @@ class Model
      */
     public function __construct($db = 'default')
     {
-        $dbConfig = Application::getInstance()->config['database'];
+        $this->app = Application::getInstance();
+        $dbConfig = $this->app->config['database'];
         if (isset($dbConfig[$db]) && !empty($dbConfig[$db])) {
             $this->config = $dbConfig[$db];
         } else {
@@ -47,8 +44,6 @@ class Model
             $class = '\System\Driver\Database\PdoMySQL';
         }
         $this->conn = new $class($this->config);
-
-        $this->cache = Cache::getInstance([]);
     }
 
     public function insert($sql)

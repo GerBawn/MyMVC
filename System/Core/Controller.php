@@ -5,24 +5,43 @@
  */
 namespace System\Core;
 
-use System\Libraries\Cache;
-
+/**
+ * Class Controller
+ * @package System\Core
+ */
 abstract class Controller
 {
-    protected $cache;
+    /**
+     * @var Loader
+     */
     protected $load;
 
+    /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
+     * Controller constructor.
+     */
     public function __construct()
     {
-        $this->cache = Cache::getInstance([]);
-        $this->load = Application::getInstance()->load;
+        $this->app = Application::getInstance();
+        $this->load = $this->app->load;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     */
     public function assign($key, $value)
     {
 
     }
 
+    /**
+     * @param $file
+     */
     public function display($file)
     {
 
