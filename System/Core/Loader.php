@@ -36,4 +36,20 @@ class Loader
         }
         self::$loaded['helper'][$name] = $name;
     }
+
+    public function library($name)
+    {
+        if (isset($loaded['libraries'][$name])) {
+            return;
+        }
+        $fileName = SYSTEM_DIR . '/Libraries/' . ucfirst($name) . '.php';
+        if (file_exists($fileName)) {
+            require $fileName;
+        }
+        $fileName = APP_DIR . '/Libraries/' . ucfirst($name) . '.php';
+        if (file_exists($fileName)) {
+            require $fileName;
+        }
+        self::$loaded['Libraries'][$name] = $name;
+    }
 }
