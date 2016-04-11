@@ -12,7 +12,6 @@ $config = [
     ],
     'index' => [
         'decorators' => [
-            'App\\Decorator\\TestDecorator',
         ],
     ],
 ];

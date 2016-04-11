@@ -10,6 +10,7 @@ class Index extends Controller
 {
     public function index()
     {
-        $this->load->helper('helpers');
+        $this->load->helper('Instance');
+        var_dump(input()->get());
     }
 }
