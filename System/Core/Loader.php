@@ -42,11 +42,11 @@ class Loader
         if (isset($loaded['libraries'][$name])) {
             return;
         }
-        $fileName = SYSTEM_DIR . '/Libraries/' . ucfirst($name) . '.php';
+        $fileName = APP_DIR . '/Libraries/' . ucfirst($name) . '.php';
         if (file_exists($fileName)) {
             require $fileName;
         }
-        $fileName = APP_DIR . '/Libraries/' . ucfirst($name) . '.php';
+        $fileName = SYSTEM_DIR . '/Libraries/' . ucfirst($name) . '.php';
         if (file_exists($fileName)) {
             require $fileName;
         }
