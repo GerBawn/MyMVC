@@ -6,6 +6,7 @@
 namespace System\Core;
 
 use System\Libraries\Cache;
+use System\Libraries\Factory;
 
 class Model
 {
@@ -22,6 +23,11 @@ class Model
     private $config;
 
     protected $app;
+
+    /**
+     * @var string 保存模型对应的数据表
+     */
+    protected $table;
 
     /**
      * Model constructor.
@@ -43,11 +49,18 @@ class Model
         } elseif ($driver == 'pdo') {
             $class = '\System\Driver\Database\PdoMySQL';
         }
-        $this->conn = new $class($this->config);
+        $this->conn = Factory::createDb($class, $this->config);
     }
 
-    public function insert($sql)
+    public function insert($needle)
     {
+        $cols = implode(',', array_keys($needle));
+        $values = '';
+        foreach ($needle as $value) {
+            $values .= "'{$value}',";
+        }
+        $values = substr($values, 0, strlen($values) - 1);
+        $sql = "INSERT INTO {$this->table}($cols) VALUES({$values})";
         return $this->conn->insert($sql);
     }
 

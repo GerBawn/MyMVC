@@ -51,8 +51,9 @@ class MySQL implements IDatabase
 
             return false;
         }
+        $this->affectedRows = $this->conn->affected_rows;
 
-        return $this->conn->affected_rows;
+        return $this->affectedRows;
     }
 
     public function insert($sql)
@@ -63,8 +64,9 @@ class MySQL implements IDatabase
 
             return false;
         }
+        $this->insertId = $this->conn->insert_id;
 
-        return $this->conn->insert_id;
+        return $this->insertId;
     }
 
     public function query($sql)
@@ -112,12 +114,12 @@ class MySQL implements IDatabase
 
     public function lastInsertId()
     {
-        return $this->conn->insert_id;
+        return $this->insertId;
     }
 
     public function affectedRow()
     {
-        return $this->conn->affected_rows;
+        return $this->affectedRows;
     }
 
 
