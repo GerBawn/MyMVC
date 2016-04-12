@@ -50,4 +50,9 @@ class Factory
     {
         return Input::getInstance();
     }
+
+    public static function createRedis()
+    {
+        return Redis::getInstance();
+    }
 }
