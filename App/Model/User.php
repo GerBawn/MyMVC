@@ -10,9 +10,11 @@ use System\Core\Model;
 
 class User extends Model
 {
+
     public function __construct()
     {
         parent::__construct('test');
+        $this->table = 'm1';
     }
 
     public function getOneUser()
@@ -31,16 +33,7 @@ class User extends Model
 
     public function createUser($user)
     {
-        $cols = implode(',', array_keys($user));
-        $values = '';
-        foreach ($user as $value) {
-            $values .= "'{$value}',";
-        }
-        $values = substr($values, 0, strlen($values) - 1);
-        $sql = "INSERT INTO m1({$cols}) VALUES({$values})";
-        if ($this->insert($sql)) {
-            return true;
-        }
+        return $this->insert($user);
     }
 
     public function updateUser($user)

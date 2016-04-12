@@ -10,7 +10,8 @@ class Index extends Controller
 {
     public function index()
     {
-        $this->load->helper('Instance');
-        var_dump(input()->get());
+        $user = new User();
+        var_dump($user->getOneUser());
+        var_dump($user->createUser(['name' => 'lingchen', 'age' => 23]));
     }
 }
