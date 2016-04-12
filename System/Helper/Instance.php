@@ -1,5 +1,6 @@
 <?php
 use System\Libraries\Cache;
+use System\Libraries\Factory;
 use System\Libraries\Input;
 
 /**
@@ -14,7 +15,7 @@ use System\Libraries\Input;
  */
 function cache()
 {
-    return Cache::getInstance();
+    return Factory::createCache();
 }
 
 /**
@@ -22,5 +23,5 @@ function cache()
  */
 function input()
 {
-    return Input::getInstance();
+    return Factory::createInput();
 }
