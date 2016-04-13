@@ -6,7 +6,7 @@ use Predis\Client;
 use System\Core\Controller;
 use System\Libraries\Log;
 
-class Index extends Controller
+class IndexController extends Controller
 {
     public function index()
     {
