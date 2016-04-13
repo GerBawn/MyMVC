@@ -72,6 +72,7 @@ class MySQL implements IDatabase
     public function query($sql)
     {
         $this->result = $this->conn->query($sql);
+        $this->affectedRows = $this->conn->affected_rows;
     }
 
     public function one($returnType = MYSQLI_ASSOC)
@@ -87,11 +88,6 @@ class MySQL implements IDatabase
 
         return $row;
 
-    }
-
-    public function close()
-    {
-        $this->conn->close();
     }
 
     public function startTransaction()
@@ -117,14 +113,18 @@ class MySQL implements IDatabase
         return $this->insertId;
     }
 
-    public function affectedRow()
+    public function affectedRows()
     {
         return $this->affectedRows;
     }
 
-
     public function __destruct()
     {
         $this->close();
+    }
+
+    public function close()
+    {
+        $this->conn->close();
     }
 }

@@ -28,5 +28,5 @@ interface IDatabase
 
     public function lastInsertId();
 
-    public function affectedRow();
+    public function affectedRows();
 }
