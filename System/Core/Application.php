@@ -35,7 +35,7 @@ class Application
             $_REQUEST['c'];
         $method = empty($_REQUEST['m']) ? $this->config['controller']['defaultMethod'] :
             $_REQUEST['m'];
-        $class = '\\App\\Controller\\' . ucfirst($controller);
+        $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
         $obj = new $class();
 
         $decorators = [];
