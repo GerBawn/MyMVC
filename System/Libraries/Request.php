@@ -14,7 +14,7 @@ class Request
      * @param $data array
      * @return mixed 成功时返回请求结果，失败返回false
      */
-    public static function post($url, $data)
+    public static function post($url, $data, $setOpts = [])
     {
         $curl = curl_init($url);
         $opts = [
@@ -22,6 +22,8 @@ class Request
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_RETURNTRANSFER => true,
         ];
+
+        $opts = $setOpts + $opts;
 
         curl_setopt_array($curl, $opts);
 
@@ -34,14 +36,15 @@ class Request
      * @param array $data
      * @return mixed 成功时返回请求结果，失败返回false
      */
-    public static function get($url, $data = [])
+    public static function get($url, $data = [], $setOpts = [])
     {
         if (!empty($data)) {
             $queryStr = http_build_query($data);
             $url .= '?' . $queryStr;
         }
         $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $setOpts[CURLOPT_RETURNTRANSFER] = true;
+        curl_setopt_array($curl, $setOpts);
 
         return self::sendRequest($curl);
     }
