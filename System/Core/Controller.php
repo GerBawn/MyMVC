@@ -22,6 +22,12 @@ abstract class Controller
     protected $app;
 
     /**
+     * 用来存放需要在视图中使用的参数
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * Controller constructor.
      */
     public function __construct()
@@ -36,14 +42,19 @@ abstract class Controller
      */
     public function assign($key, $value)
     {
-
+        $this->data[$key] = $value;
     }
 
     /**
      * @param $file
      */
-    public function display($file)
+    public function display($file = '')
     {
-
+        if (empty($file)) {
+            $file = BASEDIR . '/App/View/' . __CLASS__ . '/' . 'index.php';
+        }
+        $path = BASEDIR . '/App/View/' . $file;
+        extract($this->data);
+        include $path;
     }
 }
