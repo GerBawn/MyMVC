@@ -29,7 +29,7 @@ class Input
         return self::$instance;
     }
 
-    public function get($key = '')
+    public function get($key = '', $default = '')
     {
         if ($key == '') {
             return $this->data;
@@ -38,7 +38,7 @@ class Input
             return $this->data[$key];
         }
 
-        return '';
+        return $default;
     }
 
 }
