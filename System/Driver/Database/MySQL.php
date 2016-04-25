@@ -72,6 +72,7 @@ class MySQL implements IDatabase
     public function query($sql)
     {
         $this->result = $this->conn->query($sql);
+        $this->insertId = $this->conn->insert_id;
         $this->affectedRows = $this->conn->affected_rows;
     }
 
