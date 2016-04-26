@@ -32,9 +32,9 @@ class Application
     public function run()
     {
         $controller = empty($_REQUEST['action']) ? $this->config['controller']['defaultController'] :
-            $_REQUEST['c'];
+            $_REQUEST['action'];
         $method = empty($_REQUEST['operation']) ? $this->config['controller']['defaultMethod'] :
-            $_REQUEST['m'];
+            $_REQUEST['operation'];
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
         $obj = new $class();
 
