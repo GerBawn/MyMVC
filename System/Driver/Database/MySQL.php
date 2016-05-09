@@ -49,16 +49,14 @@ class MySQL implements IDatabase
 
     public function update($sql)
     {
-        $this->conn->query($sql);
-        $this->affectedRows = $this->conn->affected_rows;
+        $this->query($sql);
 
         return $this->affectedRows;
     }
 
     public function insert($sql)
     {
-        $this->conn->query($sql);
-        $this->insertId = $this->conn->insert_id;
+        $this->query($sql);
 
         return $this->insertId;
     }
