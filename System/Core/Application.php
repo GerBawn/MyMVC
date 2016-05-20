@@ -29,7 +29,7 @@ class Application
         return self::$instance;
     }
 
-    public function run()
+    public function run($argc = 0, $argv = [])
     {
         if (php_sapi_name() == 'cli') {
             $controller = $argv[1];

@@ -22,5 +22,8 @@ if ($app->config['debug']) {
     error_reporting(0);
 }
 ini_set('date.timezone', $app->config['timezone']);
-//date_default_timezone_set($th)
-$app->run();
+if (php_sapi_name() == 'cli') {
+    $app->run($argc, $argv);
+} else {
+    $app->run();
+}
