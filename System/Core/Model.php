@@ -14,7 +14,7 @@ class Model
      * 保存数据库连接
      * @var
      */
-    public $conn;
+    protected $conn;
 
     /**
      * 配置信息
@@ -33,7 +33,7 @@ class Model
      * Model constructor.
      * @param string $db
      */
-    public function __construct($db = 'default')
+    protected function __construct($db = 'default')
     {
         $this->app = Application::getInstance();
         $dbConfig = $this->app->config['database'];
@@ -52,7 +52,7 @@ class Model
         $this->conn = Factory::createDb($class, $this->config);
     }
 
-    public function insert($needle)
+    protected function insert($needle)
     {
         $cols = implode(',', array_keys($needle));
         $values = '';
@@ -64,7 +64,7 @@ class Model
         return $this->conn->insert($sql);
     }
 
-    public function update($sql)
+    protected function update($sql)
     {
         return $this->conn->update($sql);
     }
@@ -72,7 +72,7 @@ class Model
     /**
      * @param $sql
      */
-    public function query($sql)
+    protected function query($sql)
     {
         $this->conn->query($sql);
     }
@@ -80,7 +80,7 @@ class Model
     /**
      * @return mixed
      */
-    public function one()
+    protected function one()
     {
         return $this->conn->one();
     }
@@ -88,7 +88,7 @@ class Model
     /**
      * @return mixed
      */
-    public function all()
+    protected function all()
     {
         return $this->conn->all();
     }
@@ -96,7 +96,7 @@ class Model
     /**
      *
      */
-    public function startTransaction()
+    protected function startTransaction()
     {
         $this->conn->startTransaction();
     }
@@ -104,7 +104,7 @@ class Model
     /**
      *
      */
-    public function commit()
+    protected function commit()
     {
         $this->conn->commit();
     }
@@ -112,18 +112,28 @@ class Model
     /**
      *
      */
-    public function rollback()
+    protected function rollback()
     {
         $this->conn->rollback();
     }
 
-    public function lastInsertId()
+    protected function lastInsertId()
     {
         return $this->conn->lastInsertId();
     }
 
-    public function affectedRows()
+    protected function affectedRows()
     {
         return $this->conn->affectedRows();
+    }
+
+    protected function error()
+    {
+        return $this->conn->error();
+    }
+
+    protected function errno()
+    {
+        return $this->conn->errno;
     }
 }

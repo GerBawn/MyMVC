@@ -124,4 +124,14 @@ class MySQL implements IDatabase
     {
         $this->conn->close();
     }
+
+    public function errno()
+    {
+        return $this->conn->errno;
+    }
+
+    public function error()
+    {
+        return $this->conn->error;
+    }
 }

@@ -31,10 +31,16 @@ class Application
 
     public function run()
     {
-        $controller = empty($_REQUEST['action']) ? $this->config['controller']['defaultController'] :
-            $_REQUEST['action'];
-        $method = empty($_REQUEST['operation']) ? $this->config['controller']['defaultMethod'] :
-            $_REQUEST['operation'];
+        if (php_sapi_name() == 'cli') {
+            $controller = $argv[1];
+            $method = $argv[2];
+        } else {
+            $controller = empty($_REQUEST['action']) ? $this->config['controller']['defaultController'] :
+                $_REQUEST['action'];
+            $method = empty($_REQUEST['operation']) ? $this->config['controller']['defaultMethod'] :
+                $_REQUEST['operation'];
+        }
+
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
         $obj = new $class();
 
@@ -53,9 +59,10 @@ class Application
         foreach ($decorators as $decorator) {
             $decorator->beforeAction();
         }
-        $obj->$method();
+        $res = $obj->$method();
         foreach ($decorators as $decorator) {
             $decorator->afterAction();
         }
+        return $res;
     }
 }
