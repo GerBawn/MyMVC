@@ -5,6 +5,8 @@
  */
 namespace System\Core;
 
+use System\Libraries\Log;
+
 class Application
 {
     private static $instance;
@@ -42,6 +44,10 @@ class Application
         }
 
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
+        if (!class_exists($class)) {
+            Log::write('ERROR', "class[{$class}] is not exists");
+            exit("class[{$class}] is not exists");
+        }
         $obj = new $class();
 
         $decorators = [];
@@ -58,6 +64,10 @@ class Application
 
         foreach ($decorators as $decorator) {
             $decorator->beforeAction();
+        }
+        if (!method_exists($obj, $method)) {
+            Log::write('ERROR', "method[{$method}] is not exists in {$class}");
+            exit("method[{$method}] is not exists in {$class}");
         }
         $res = $obj->$method();
         foreach ($decorators as $decorator) {
