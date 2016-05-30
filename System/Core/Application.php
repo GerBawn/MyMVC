@@ -5,6 +5,8 @@
  */
 namespace System\Core;
 
+use System\Libraries\Log;
+
 class Application
 {
     private static $instance;
@@ -36,6 +38,10 @@ class Application
         $method = empty($_REQUEST['m']) ? $this->config['controller']['defaultMethod'] :
             $_REQUEST['m'];
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
+        if (!class_exists($class)) {
+            Log::write('ERROR', "class[{$class}] is not exists");
+            exit("class[{$class}] is not exists");
+        }
         $obj = new $class();
 
         $decorators = [];
@@ -53,7 +59,11 @@ class Application
         foreach ($decorators as $decorator) {
             $decorator->beforeAction();
         }
-        $obj->$method();
+        if (!method_exists($obj, $method)) {
+            Log::write('ERROR', "method[{$method}] is not exists in {$class}");
+            exit("method[{$method}] is not exists in {$class}");
+        }
+        $res = $obj->$method();
         foreach ($decorators as $decorator) {
             $decorator->afterAction();
         }
