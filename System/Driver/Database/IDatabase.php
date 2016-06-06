@@ -1,9 +1,4 @@
 <?php
-/**
- * User: GerBawn
- * Date: 2016/4/7
- * Time: 10:26
- */
 namespace System\Driver\Database;
 
 interface IDatabase

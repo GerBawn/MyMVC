@@ -1,8 +1,4 @@
 <?php
-/**
- * User: GerBawn
- * Date: 2016/4/7 21:38
- */
 namespace System\Driver\Log;
 
 class SeasLog
