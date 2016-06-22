@@ -44,7 +44,7 @@ class Application
         }
 
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
-        if (!class_exists($class)) {
+        if (!class_exists($class, false)) {
             Log::write('ERROR', "class[{$class}] is not exists");
             exit("class[{$class}] is not exists");
         }
