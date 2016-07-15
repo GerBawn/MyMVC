@@ -48,7 +48,7 @@ class Model
         $this->conn = Factory::createDb($class, $this->config);
     }
 
-    public function insert($needle)
+    protected function insert($needle)
     {
         if (is_array($needle)) {
             $cols = implode(',', array_keys($needle));
@@ -65,7 +65,7 @@ class Model
         return $this->conn->insert($sql);
     }
 
-    public function update($needle, $table = '', $where = [])
+    protected function update($needle, $where = [], $table = '')
     {
         if (is_string($needle)) {
             $sql = $needle;
@@ -85,7 +85,10 @@ class Model
                     $whereStr .= "`{$key}` = '" . addslashes($value) . "' AND ";
                 }
             }
-            $sql = "UPDATE {$this->table} SET {$set} WHERE {$where}";
+            if ($table == '') {
+                $table = $this->table;
+            }
+            $sql = "UPDATE {$table} SET {$set} WHERE {$where}";
         }
         return $this->conn->update($sql);
     }
