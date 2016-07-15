@@ -44,7 +44,7 @@ class Application
         }
 
         $class = '\\App\\Controller\\' . ucfirst($controller) . 'Controller';
-        if (!class_exists($class, false)) {
+        if (!class_exists($class)) {
             Log::write('ERROR', "class[{$class}] is not exists");
             exit("class[{$class}] is not exists");
         }
@@ -71,7 +71,7 @@ class Application
         }
         $res = $obj->$method();
         foreach ($decorators as $decorator) {
-            $decorator->afterAction();
+            $decorator->afterAction($res);
         }
         return $res;
     }

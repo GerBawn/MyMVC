@@ -7,7 +7,9 @@ interface IDatabase
 
     public function insert($sql);
 
-    public function query($sql);
+    public function select($sql);
+
+    public function delete($sql);
 
     public function one();
 
@@ -24,4 +26,5 @@ interface IDatabase
     public function lastInsertId();
 
     public function affectedRows();
+
 }
