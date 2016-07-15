@@ -1,8 +1,4 @@
 <?php
-/**
- * User: GerBawn
- * Date: 2016/4/6 23:03
- */
 namespace System\Core;
 
 use System\Libraries\Cache;
@@ -47,34 +43,59 @@ class Model
         if ($driver == 'mysqli') {
             $class = 'System\Driver\Database\MySQL';
         } elseif ($driver == 'pdo') {
-            $class = '\System\Driver\Database\PdoMySQL';
+            $class = '\System\Driver\Database\PDO';
         }
         $this->conn = Factory::createDb($class, $this->config);
     }
 
     public function insert($needle)
     {
-        $cols = implode(',', array_keys($needle));
-        $values = '';
-        foreach ($needle as $value) {
-            $values .= "'{$value}',";
+        if (is_array($needle)) {
+            $cols = implode(',', array_keys($needle));
+            $values = '';
+            foreach ($needle as $value) {
+                $values .= "'{$value}',";
+            }
+            $values = substr($values, 0, strlen($values) - 1);
+            $sql = "INSERT INTO `{$this->table}`($cols) VALUES({$values})";
+        } else {
+            $sql = $needle;
         }
-        $values = substr($values, 0, strlen($values) - 1);
-        $sql = "INSERT INTO {$this->table}($cols) VALUES({$values})";
+
         return $this->conn->insert($sql);
     }
 
-    public function update($sql)
+    public function update($needle, $table = '', $where = [])
     {
+        if (is_string($needle)) {
+            $sql = $needle;
+        } elseif (is_array($needle)) {
+            $set = '';
+            foreach ($needle as $key => $value) {
+                $set .= "`{$key}` = '" . addslashes($value) . "', ";
+            }
+            $set = substr($set, 0, strlen($set) - 1);
+            $whereStr = '';
+            $index = 0;
+            $len = sizeof($where);
+            foreach ($where as $key => $value) {
+                if ($index == $len) {
+                    $whereStr .= "`{$key}` = '" . addslashes($value) . "'";
+                } else {
+                    $whereStr .= "`{$key}` = '" . addslashes($value) . "' AND ";
+                }
+            }
+            $sql = "UPDATE {$this->table} SET {$set} WHERE {$where}";
+        }
         return $this->conn->update($sql);
     }
 
     /**
      * @param $sql
      */
-    public function query($sql)
+    protected function select($sql)
     {
-        $this->conn->query($sql);
+        $this->conn->select($sql);
     }
 
     /**
@@ -98,7 +119,7 @@ class Model
      */
     public function startTransaction()
     {
-        $this->conn->startTransaction();
+        return $this->conn->startTransaction();
     }
 
     /**
@@ -106,7 +127,7 @@ class Model
      */
     public function commit()
     {
-        $this->conn->commit();
+        return $this->conn->commit();
     }
 
     /**
@@ -114,7 +135,7 @@ class Model
      */
     public function rollback()
     {
-        $this->conn->rollback();
+        return $this->conn->rollback();
     }
 
     public function lastInsertId()

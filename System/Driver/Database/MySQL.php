@@ -1,9 +1,4 @@
 <?php
-/**
- * User: GerBawn
- * Date: 2016/4/7
- * Time: 10:28
- */
 namespace System\Driver\Database;
 
 use System\Libraries\Log;
@@ -61,15 +56,14 @@ class MySQL implements IDatabase
         return $this->insertId;
     }
 
-    public function query($sql)
+    public function delete($sql)
     {
-        $this->result = $this->conn->query($sql);
-        if ($this->conn->errno != 0) {
-            Log::write('ALERT', $this->conn->errno . ': ' . $this->conn->error . ": $sql");
-            die($this->conn->error . ': ' . $sql);
-        }
-        $this->insertId = $this->conn->insert_id;
-        $this->affectedRows = $this->conn->affected_rows;
+        $this->query($sql);
+    }
+
+    public function select($sql)
+    {
+        $this->query($sql);
     }
 
     public function one($returnType = MYSQLI_ASSOC)
@@ -123,5 +117,30 @@ class MySQL implements IDatabase
     public function close()
     {
         $this->conn->close();
+    }
+
+    public function errno()
+    {
+        return $this->conn->errno;
+    }
+
+    public function error()
+    {
+        return $this->conn->error;
+    }
+    
+    /**
+     * 真正执行sql语句的函数
+     * @param $sql
+     */
+    private function query($sql)
+    {
+        $this->result = $this->conn->query($sql);
+        if ($this->conn->errno != 0) {
+            Log::write('ALERT', $this->conn->errno . ': ' . $this->conn->error . ": $sql");
+            die($this->conn->error . ': ' . $sql);
+        }
+        $this->insertId = $this->conn->insert_id;
+        $this->affectedRows = $this->conn->affected_rows;
     }
 }
