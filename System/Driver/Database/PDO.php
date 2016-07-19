@@ -65,14 +65,14 @@ class PDO implements IDatabase
         $this->affectedRows = $this->result->columnCount();
     }
 
-    public function one()
+    public function one($style = \PDO::FETCH_ASSOC)
     {
-        return $this->result->fetch();
+        return $this->result->fetch($style);
     }
 
-    public function all()
+    public function all($style = \PDO::FETCH_ASSOC)
     {
-        return $this->result->fetchAll();
+        return $this->result->fetchAll($style);
     }
 
     public function close()
