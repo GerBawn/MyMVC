@@ -73,6 +73,7 @@ class Application
         foreach ($decorators as $decorator) {
             $decorator->afterAction($res);
         }
-        return $res;
+
+        echo $res;
     }
 }
